@@ -41,10 +41,8 @@
 			<!-- 页面底部 分页 -->
 			<div class="fanye">
 
-				<ul>
-					<li class="li_fanye">1</li>
-					<li class="li_fanye">2</li>
-				</ul>
+				<span id="nowpage">当前页</span> <span id="allpage">共有</span> <span><button
+						id="uppage">上一页</button></span> <span><button id="downpage">下一页</button></span>
 
 			</div>
 		</div>
@@ -122,6 +120,9 @@
 		success = function(data) {
 			//alert(data);
 			var arts = $(".arts");
+			//清空所有元素
+			arts.empty();
+
 			if (data.state == '0') {
 				$.each(data.obj, function(i, item) {
 					//添加文章信息 用以显示
@@ -140,8 +141,114 @@
 		});
 
 	};
+
+	//统计文章篇数  返回文章篇数
+	//当type为0时 统计所有文章篇数 user_id 失效
+	//当type为1时 统计user_id 为 传入user_id 的文章数 
+	var countArts = function(type, user_id) {
+
+		var artsNumb = 0;
+
+		var url = "/Blog/servlet/CountArticle";
+
+		data = {
+			"type" : type,
+			"user_id" : user_id
+		};
+
+		dataType = "json";
+
+		type = "POST";
+
+		async = false;
+
+		success = function(data) {
+
+			if (data.state == "0") {
+				//alert("获取到的文章篇数为:" + data.obj);
+				artsNumb = parseInt(data.obj);
+			}
+
+		};
+
+		$.ajax({
+
+			url : url,
+			data : data,
+			dataType : dataType,
+			async : async,
+			success : success
+
+		});
+
+		return artsNumb;
+	};
+
+	//文章总篇数
+	var artsnumb = countArts(0, 0);
+
+	//每页文章数
+	var everpagenumb = 20;
+
 	//开始加载文章
-	loadArts(1, 0, 10);
+	loadArts(1, 0, everpagenumb);
+	
+	//当前页表示span
+	var nowpage = $("#nowpage");
+	//上一页按钮
+	var uppage = $("#uppage");
+	//下一页按钮
+	var downpage = $("#downpage");
+	//所有页span
+	var allpage = $("#allpage");
+
+	var nowpagenumb = 0;
+
+	var allpagenumb = Math.ceil(artsnumb / everpagenumb);
+	
+	allpage.text("共有 "+allpagenumb+" 页");
+	nowpage.text("当前页: "+(nowpagenumb+1));
+	
+	//alert(allpage);
+
+	//向上或向下翻页
+	var loaduppage = function() {
+		//alert("向上翻页");
+
+		if (nowpagenumb > 0) {
+
+			nowpagenumb--;
+			
+			nowpage.text("当前页:"+(nowpagenumb+1));
+			
+			loadArts(1, nowpagenumb * everpagenumb, everpagenumb);
+
+		}else{
+			alert("没有上一页了");
+		}
+
+	};
+
+	//向上或向下翻页
+	var loaddownpage = function() {
+		//alert("向下翻页");
+		//向下翻页
+		if (nowpagenumb < allpagenumb-1) {
+			nowpagenumb++;
+			
+			nowpage.text("当前页:"+(nowpagenumb+1));
+			
+			loadArts(1, nowpagenumb * everpagenumb, everpagenumb);
+
+		}else{
+			alert("以到最后一页");
+		}
+		
+
+	};
+
+	uppage.click(loaduppage);
+	downpage.click(loaddownpage);
 </script>
 
 </html>

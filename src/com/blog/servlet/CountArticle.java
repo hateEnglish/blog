@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.blog.dao.ArticleDao;
+import com.blog.util.GsonUtil;
 import com.blog.util.Result;
 
 public class CountArticle extends HttpServlet {
@@ -61,6 +62,9 @@ public class CountArticle extends HttpServlet {
 			
 			result.setObj(numb);
 		}
+		
+		
+		resp.getWriter().write(GsonUtil.toJson(result));
 		
 	}
 
