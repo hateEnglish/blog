@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>header1</title>
+		<meta name="author" content="Administrator" />
+
+		<link type="text/css" href="../css/bootstrap.css" rel="stylesheet"/>
+
+		<link type="text/css" href="css/header.css" rel="stylesheet"/>
+
+	</head>
+
+	<body>
+
+		<nav class="nav-tabs" style="background: #F5F5F5">
+			<div id="show_icon">
+				<h3><a href="/Blog/static_resource/index/index.html">BLOG</a></h3>
+			</div>
+
+			<div id="user_state" >
+				<div id="unlogin" >
+				<h4 style="margin-right: 20px;"><a href="../login/login.html">登陆</a>
+				<a href="../regist/regist.html">注册</a></h4>
+				</div>
+				
+				<div id="login" style="margin-right: 30px;margin-top: 15px">
+					<label style="float: left;margin-top: 5px;margin-right: 20px"><a>设置</a></label>
+					<a href="#"><img width="50px" height="50px" alt="用户头像" src="../imgs/default.jpg"/></a>
+					<label id="user_name">小心一点</label>
+					
+				</div>
+				
+			</div>
+
+		</nav>
+
+	</body>
+	
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	
+	<script>
+		var unlogin = $("#unlogin");
+		var login = $("#login");
+		login.hide();
+		
+		url = "http://127.0.0.1:8080/Blog/servlet/GetUserState";
+		dataType = "json";
+		type = "POST";
+		success = function(data){
+			if(data.state=="0"){
+				unlogin.hide();
+				login.show();
+				$("#user_name").text(data.obj.name);
+			}else if(data.state=="1"){
+				//alert(data.obj);
+			}
+		};
+		
+		$.ajax({
+			url:url,
+			dataType:dataType,
+			type:type,
+			success:success
+		});
+		
+	</script>
+	
+</html>
+

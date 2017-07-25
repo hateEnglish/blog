@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>showNows</title>
+		<meta name="author" content="Administrator" />
+		<!-- Date: 2017-07-20 -->
+		
+		<link type="text/css" rel="stylesheet" href="css/showNows.css" />
+		
+		<link type="text/css" rel="stylesheet" href="../header/css/header.css"/>
+		
+		<script type="text/javascript" src="js/showNows.js"></script>
+	</head>
+	<body>
+	
+		<div id="header"></div>
+		
+		<div class="content">
+		
+		<div id="head">
+		<h1 align="center" id='title'>第3章 真理祭坛</h1>
+		<div id="menu" >
+			<h4 id="h4">改变字体:</h4>
+			
+			<h4 id="h4">
+			<input type="button" value="大" onclick="setFont('big')"/>
+			
+			<input type="button" value="中" onclick="setFont('middle')"/>
+			<input type="button" value="小" onclick="setFont('small')"/></h4>
+		</div>
+		
+		</div>
+		
+		<hr />
+		
+		<div id="context" class="middle">
+		
+		</div>
+		</div>
+	</body>
+	
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	
+	<script type="text/javascript">
+	
+	//加载  标题栏
+	$("#header").load("../header/header.html");
+	
+	var cookie = document.cookie;
+	var art_id = cookie.split("=")[1];
+	alert(cookie+":"+art_id);
+	
+	//加载文章
+	var loadArts = function(type,start, numb) {
+		//alert("start="+start);
+		url = "http://127.0.0.1:8080/Blog/servlet/GetArticle";
+
+		data = {
+				"type":type,
+			"start" : start,
+			"numb" : numb
+		};
+
+		dataType = "json";
+
+		type = "POST";
+
+		success = function(data) {
+			//alert(data);
+			$("#title").html(data.obj.title);
+			$("#context").html(data.obj.content);
+		};
+
+		$.ajax({
+			url : url,
+			data : data,
+			dataType : dataType,
+			type : type,
+			success : success
+		});
+
+	};
+	//加载文章
+	loadArts(0,art_id,0);
+	</script>
+	
+</html>
+

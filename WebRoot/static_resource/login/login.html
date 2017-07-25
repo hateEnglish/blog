@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>login</title>
+		<meta name="author" content="Administrator" />
+		<!-- Date: 2017-07-22 -->
+		<link type="text/css" href="../css/bootstrap.css" rel="stylesheet"/>
+
+		<link type="text/css" href="css/login.css" rel="stylesheet"/>
+
+	</head>
+	<body>
+
+		<div class="incenter">
+			<form action="login.html" method="post" onsubmit="return mysubmit()">
+				<table id = "login_table">
+					<tr>
+						<td><h5>账号:</h5></td><td>
+						<input type="text" name="account" placeholder="请输入用户账号" required/>
+						</td>
+					</tr>
+					<tr>
+						<td><h5>密码:</h5></td><td>
+						<input type="password" name="password" placeholder="请输入用户密码" required/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center">
+						<input type="submit" value="登陆"/>
+						没有账号?<a href="../regist/regist.html">注册</a></td>
+					</tr>
+					<tr>
+					<td colspan="2" align="center"><span id="error"></span></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+
+	</body>
+
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+	<script type="text/javascript" src="../js/bootstrap.js"></script>
+
+	<script type="text/javascript">
+		var mysubmit = function() {
+
+			url = "http://127.0.0.1:8080/Blog/servlet/LoginServlet";
+			type = "POST";
+			dataType = "json";
+
+			success = function(data) {
+				//alert(data.state);
+				//表示登陆失败
+				if(data.state=='1'){
+					//alert("fucm");
+					$("#error").text(data.obj);
+				//表示登陆成功
+				}else if(data.state=='0'){
+					//alert("登陆成功");
+					window.location="/Blog/static_resource/index/index.html";
+				}
+			};
+
+			var account = $("input[name='account']");
+			var passwd = $("input[name='password']");
+
+			data = {
+				"account" : account.val(),
+				"password" : passwd.val()
+			};
+
+			$.ajax({
+				url : url,
+				type : type,
+				crossDomain : true,
+				dataType : dataType,
+				data : data,
+				success : success,
+			});
+
+			return false;
+		};
+
+	</script>
+
+</html>
+

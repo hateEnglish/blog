@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>index</title>
+<meta name="author" content="Administrator" />
+<!-- Date: 2017-07-22 -->
+
+<link type="text/css" href="../css/bootstrap.css" rel="stylesheet" />
+
+<link type="text/css" href="css/index.css" rel="stylesheet" />
+
+<link type="text/css" href="../header/css/header.css" rel="stylesheet" />
+
+</head>
+<body>
+	<div id="header"></div>
+
+	<div class="content">
+
+		<div id="show_article">
+			<ul class="arts">
+				<li class="art">
+					<div class="article">
+						<div class="title">
+							<h3>文章标题</h3>
+						</div>
+						<div class="author">
+							<h4>作者</h4>
+						</div>
+						<div class="time">
+							<h6>发表时间</h6>
+						</div>
+					</div>
+				</li>
+
+			</ul>
+
+			<div class="fanye">
+
+				<ul>
+					<li >1</li>
+					<li>2</li>
+				</ul>
+
+			</div>
+		</div>
+
+
+
+		<div class="right_bar">
+
+			<div>
+				<a href="../write/write.html"><h4>写文章</h4></a>
+			</div>
+
+			<div id="new_article" class="left_list"></div>
+
+			<div id="new_user" class="left_list"></div>
+
+
+		</div>
+
+	</div>
+
+
+
+
+
+
+</body>
+
+<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+<script type="text/javascript">
+	//加载  标题栏
+	$("#header").load("../header/header.html");
+
+	//产生元素li 用以添加显示文章信息
+	var productLi = function(art_id, title, auther, time) {
+		return "<li class='art'><div class='article'><div class='title'><h3><a onclick='artToRead("
+				+ art_id
+				+ ")' href='http://127.0.0.1:8080/Blog/static_resource/read/read.html'>"
+				+ title
+				+ "</a></h3></div><div class='author'><h4>"
+				+ auther
+				+ "</h4></div><div class='time'><h6>"
+				+ time
+				+ "</h6></div></div></li>";
+	};
+
+	//用于文章阅读 设置文章idcookie 
+	//以便跳转到文章阅读页面后 加载文章
+	var artToRead = function(art_id) {
+		//alert(art_id);
+		document.cookie = "art_id=" + art_id + ";path=/";
+
+		//window.location.href="http://127.0.0.1:8080/Blog/read/read.html";
+
+	};
+
+	//加载一定范围内的文章的 信息
+	var loadArts = function(type, start, numb) {
+
+		url = "http://127.0.0.1:8080/Blog/servlet/GetArticle";
+
+		data = {
+			"type" : type,
+			"start" : start,
+			"numb" : numb
+		};
+
+		dataType = "json";
+
+		type = "POST";
+
+		success = function(data) {
+			//alert(data);
+			var arts = $(".arts");
+			if (data.state == '0') {
+				$.each(data.obj, function(i, item) {
+					//添加文章信息 用以显示
+					arts.append(productLi(item.id, item.title, item.author,
+							item.time));
+				});
+			}
+		};
+
+		$.ajax({
+			url : url,
+			data : data,
+			dataType : dataType,
+			type : type,
+			success : success
+		});
+
+	};
+	//开始加载文章
+	loadArts(1, 0, 10);
+</script>
+
+</html>
+

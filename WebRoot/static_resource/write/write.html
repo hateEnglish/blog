@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>write</title>
+		<meta name="author" content="Administrator" />
+		<!-- Date: 2017-07-24 -->
+		
+		<link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+		
+		<link type="text/css" rel="stylesheet" href="css/write.css"/>
+		
+		<link type="text/css" href="../header/css/header.css" rel="stylesheet"/>
+		
+	</head>
+	<body>
+		<div id="header"></div>
+		
+		<div class="content">
+			
+			<div >
+				<h4>文章标题</h4>
+				<input name="title" type="text" placeholder="请在此输入文章的标题" />
+				<a style="float: right" href="../index/index.html"><h4>返回首页</h4></a>
+			</div>
+			
+			<div >
+				
+				<h4>文章内容</h4>
+				
+				<textarea name="context" rows="15" style="width: 80%"></textarea>
+				
+			</div>
+			
+			<div id="submit">
+				<button onclick="mysubmit(0)">发表</button><button onclick="mysubmit(1)">存为草稿</button>
+			</div>
+			
+		</div>
+		
+	</body>
+	
+	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+	
+	<script type="text/javascript">
+		
+	$("#header").load("../header/header.html");
+		
+		var mysubmit = function(state){
+			var title = $("[name='title']");
+			var context = $("[name='context']");
+			
+			url = "http://127.0.0.1:8080/Blog/servlet/ArticleSave";
+			data = {"title":title.val(),"context":context.val(),"state":state};
+			
+			type = "POST";
+			
+			dataType = "json";
+			
+			success = function(data){
+				if(state==0&&data.state=="0"){
+					alert("文章发表成功");
+					title.val("");
+					context.val("");
+				}else if(state==1&&data.state=="0"){
+					alert("文章保存成功")
+					title.val("");
+					context.val("");
+				}
+			};
+			
+			$.ajax({
+				url:url,
+				data:data,
+				dataType:dataType,
+				type:type,
+				success:success
+			});
+			
+		};
+		
+	</script>
+	
+</html>
+

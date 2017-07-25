@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>regist</title>
+<meta name="author" content="Administrator" />
+
+<link type="text/css" href="../css/bootstrap.css" rel="stylesheet" />
+
+<link type="text/css" href="css/regist.css" rel="stylesheet" />
+
+</head>
+<body>
+
+	<div class="incenter">
+
+		<form action="regist.html" method="get" onsubmit="return mysubmit()">
+			<table>
+
+				<tr>
+					<td><h5 align="center">账号:</h5></td>
+					<td><input type="text" name="account" placeholder="六到八位由字母和数字构成"
+						required /></td>
+					<td><label id="account_lab"></label></td>
+
+				</tr>
+				<tr>
+					<td><h5 align="center">用户名:</h5></td>
+					<td><input type="text" name="user_name" placeholder="三到十位字符"
+						required /></td>
+					<td><label id="user_name_lab"></label></td>
+				</tr>
+				<tr>
+					<td><h5 align="center">密码:</h5></td>
+					<td><input type="password" name="password" placeholder="六到十二位由字母和数字构成"
+						required /></td>
+					<td><label id="passwd_lab"></label></td>
+				</tr>
+
+				<tr>
+					<td><h5 align="center">再次输入密码:</h5></td>
+					<td><input type="password" id="re_password"
+						placeholder="请再次输入密码" required /></td>
+					<td><label id="re_passwd_lab"></label></td>
+				</tr>
+
+				<tr>
+
+					<td><h5 align="center">性别:</h5></td>
+					<td align="center">男 <input type="radio" name="sex"
+						value="man" checked="" /> 女 <input type="radio" name="sex"
+						value="woman" />
+					</td>
+					<td><label id="sex_lab"></label></td>
+				</tr>
+
+
+				<tr>
+					<td colspan="2" align="center"><input type="submit" value="注册" />
+						已有账号?<a href="../login/login.html">登陆</a></td>
+				</tr>
+
+				<tr align="center">
+					<td colspan="2"></td>
+					<span id="error"></span>
+				</tr>
+
+			</table>
+		</form>
+
+	</div>
+
+</body>
+
+<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+<script type="text/javascript" src="../js/bootstrap.js"></script>
+
+<script type="text/javascript">
+
+	
+
+
+	var mysubmit = function() {
+
+		url = "http://127.0.0.1:8080/Blog/servlet/RegistServlet";
+		type = "POST";
+		dataType = "json";
+
+		success = function(data) {
+			alert(data.state);
+			if (data.state == '1') {
+				alert("fucm");
+				$("#error").text(data.obj + "haha");
+			}
+		};
+
+		var account = $("input[name='account']");
+		var passwd = $("input[name='password']");
+		var user_name = $("input[name='user_name']");
+		var sex = $("input[name='sex'][checked]");
+
+		alert(account.val() + ":" + passwd.val() + ":" + user_name.val() + ":"
+				+ sex.val())
+
+		data = {
+			"account" : account.val(),
+			"password" : passwd.val(),
+			"user_name" : user_name.val(),
+			"sex" : sex.val()
+		};
+
+		$.ajax({
+			url : url,
+			type : type,
+			crossDomain : true,
+			dataType : dataType,
+			data : data,
+			success : success,
+		});
+
+		return false;
+	};
+</script>
+
+
+</html>
+
+

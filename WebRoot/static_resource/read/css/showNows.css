@@ -1,0 +1,36 @@
+.content{
+	/* background:#006DCC; */
+	position: absolute;
+	left: 5%;
+	width: 90%;
+	
+}
+#head{
+	height: 100px;
+	/*background-color: blue;*/
+}
+
+#menu{
+	float: right;
+	right: 0px;
+	/*background-color: red;*/
+}
+
+
+
+#h4{
+	float: left
+}
+
+.big{
+	line-height:35px;
+	font-size: 35px;
+}
+.middle{
+	line-height:20px;
+	font-size: 20px;
+}
+.small{
+	line-height:15px;
+	font-size: 15px;
+}

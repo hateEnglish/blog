@@ -1,0 +1,11 @@
+body {
+	background: url(../../imgs/bg.jpg);
+	background-size: cover;
+}
+
+.incenter{
+	/*background-color:red;*/
+	position:absolute;
+	top: 30%;
+	left: 40%;
+}
