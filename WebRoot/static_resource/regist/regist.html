@@ -85,7 +85,7 @@
 
 	var mysubmit = function() {
 
-		url = "http://127.0.0.1:8080/Blog/servlet/RegistServlet";
+		url = "/Blog/servlet/RegistServlet";
 		type = "POST";
 		dataType = "json";
 
@@ -102,8 +102,8 @@
 		var user_name = $("input[name='user_name']");
 		var sex = $("input[name='sex'][checked]");
 
-		alert(account.val() + ":" + passwd.val() + ":" + user_name.val() + ":"
-				+ sex.val())
+		//alert(account.val() + ":" + passwd.val() + ":" + user_name.val() + ":"
+		//		+ sex.val())
 
 		data = {
 			"account" : account.val(),

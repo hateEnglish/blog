@@ -38,26 +38,29 @@
 
 			</ul>
 
+			<!-- 页面底部 分页 -->
 			<div class="fanye">
 
 				<ul>
-					<li >1</li>
-					<li>2</li>
+					<li class="li_fanye">1</li>
+					<li class="li_fanye">2</li>
 				</ul>
 
 			</div>
 		</div>
 
 
-
+		<!-- 页面右边框 -->
 		<div class="right_bar">
 
 			<div>
+				<!-- 写文章标题 -->
 				<a href="../write/write.html"><h4>写文章</h4></a>
 			</div>
 
+			<!-- 展示新发表文章 -->
 			<div id="new_article" class="left_list"></div>
-
+			<!-- 展示新注册用户 -->
 			<div id="new_user" class="left_list"></div>
 
 
@@ -82,7 +85,7 @@
 	var productLi = function(art_id, title, auther, time) {
 		return "<li class='art'><div class='article'><div class='title'><h3><a onclick='artToRead("
 				+ art_id
-				+ ")' href='http://127.0.0.1:8080/Blog/static_resource/read/read.html'>"
+				+ ")' href='/Blog/static_resource/read/read.html'>"
 				+ title
 				+ "</a></h3></div><div class='author'><h4>"
 				+ auther
@@ -97,14 +100,14 @@
 		//alert(art_id);
 		document.cookie = "art_id=" + art_id + ";path=/";
 
-		//window.location.href="http://127.0.0.1:8080/Blog/read/read.html";
+		//window.location.href="/Blog/read/read.html";
 
 	};
 
 	//加载一定范围内的文章的 信息
 	var loadArts = function(type, start, numb) {
 
-		url = "http://127.0.0.1:8080/Blog/servlet/GetArticle";
+		url = "/Blog/servlet/GetArticle";
 
 		data = {
 			"type" : type,

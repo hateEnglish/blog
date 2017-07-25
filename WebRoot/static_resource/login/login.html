@@ -17,11 +17,13 @@
 		<div class="incenter">
 			<form action="login.html" method="post" onsubmit="return mysubmit()">
 				<table id = "login_table">
+				
 					<tr>
 						<td><h5>账号:</h5></td><td>
 						<input type="text" name="account" placeholder="请输入用户账号" required/>
 						</td>
 					</tr>
+					
 					<tr>
 						<td><h5>密码:</h5></td><td>
 						<input type="password" name="password" placeholder="请输入用户密码" required/>
@@ -48,7 +50,7 @@
 	<script type="text/javascript">
 		var mysubmit = function() {
 
-			url = "http://127.0.0.1:8080/Blog/servlet/LoginServlet";
+			url = "/Blog/servlet/LoginServlet";
 			type = "POST";
 			dataType = "json";
 

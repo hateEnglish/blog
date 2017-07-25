@@ -21,7 +21,7 @@
 		<div class="content">
 		
 		<div id="head">
-		<h1 align="center" id='title'>第3章 真理祭坛</h1>
+		<h1 align="center" id='title'>文章标题</h1>
 		<div id="menu" >
 			<h4 id="h4">改变字体:</h4>
 			
@@ -51,12 +51,12 @@
 	
 	var cookie = document.cookie;
 	var art_id = cookie.split("=")[1];
-	alert(cookie+":"+art_id);
+	//alert(cookie+":"+art_id);
 	
 	//加载文章
 	var loadArts = function(type,start, numb) {
 		//alert("start="+start);
-		url = "http://127.0.0.1:8080/Blog/servlet/GetArticle";
+		url = "/Blog/servlet/GetArticle";
 
 		data = {
 				"type":type,
