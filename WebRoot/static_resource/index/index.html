@@ -81,7 +81,7 @@
 
 	//产生元素li 用以添加显示文章信息
 	var productLi = function(art_id, title, auther, time) {
-		return "<li class='art'><div class='article'><div class='title'><h3><a onclick='artToRead("
+		return "<li class='art_li'><div class='article'><div class='title'><h3><a onclick='artToRead("
 				+ art_id
 				+ ")' href='/Blog/static_resource/read/read.html'>"
 				+ title
@@ -186,9 +186,10 @@
 
 	//文章总篇数
 	var artsnumb = countArts(0, 0);
+	//alert(artsnumb);
 
 	//每页文章数
-	var everpagenumb = 20;
+	var everpagenumb = 5;
 
 	//开始加载文章
 	loadArts(1, 0, everpagenumb);

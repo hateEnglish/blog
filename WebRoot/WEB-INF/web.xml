@@ -24,6 +24,15 @@
   	<url-pattern>/static_resource/write/write.html</url-pattern>
   </filter-mapping>
   
+  <filter>
+  	<filter-name>index_filter</filter-name>
+  	<filter-class>com.blog.filter.IndexFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>index_filter</filter-name>
+  	<url-pattern>/Blog/</url-pattern>
+  </filter-mapping>
   
   <servlet>
     <description>This is the description of my J2EE component</description>
@@ -67,6 +76,13 @@
     <servlet-name>CountArticle</servlet-name>
     <servlet-class>com.blog.servlet.CountArticle</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>LoginOutServlet</servlet-name>
+    <servlet-class>com.blog.servlet.LoginOutServlet</servlet-class>
+  </servlet>
+
 
 
 
@@ -101,6 +117,10 @@
   <servlet-mapping>
     <servlet-name>CountArticle</servlet-name>
     <url-pattern>/servlet/CountArticle</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>LoginOutServlet</servlet-name>
+    <url-pattern>/servlet/LoginOutServlet</url-pattern>
   </servlet-mapping>
 
 </web-app>

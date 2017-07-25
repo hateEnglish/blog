@@ -8,10 +8,9 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
-public class EncodingFilter implements Filter {
+public class IndexFilter implements Filter {
 
 	@Override
 	public void destroy() {
@@ -22,11 +21,8 @@ public class EncodingFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		System.out.println(((HttpServletRequest)req).getRequestURI());
-		System.out.println("编码拦截设置编码为utf-8");
-		req.setCharacterEncoding("utf-8");
-		resp.setCharacterEncoding("utf-8");
+		System.out.println("首页拦截");
+		((HttpServletResponse)resp).sendRedirect("/Blog/static_resource/index/index.html");
 		
 		chain.doFilter(req, resp);
 	}

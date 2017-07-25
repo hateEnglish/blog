@@ -2,86 +2,143 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>write</title>
-		<meta name="author" content="Administrator" />
-		<!-- Date: 2017-07-24 -->
-		
-		<link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
-		
-		<link type="text/css" rel="stylesheet" href="css/write.css"/>
-		
-		<link type="text/css" href="../header/css/header.css" rel="stylesheet"/>
-		
-	</head>
-	<body>
-		<div id="header"></div>
-		
-		<div class="content">
-			
-			<div >
-				<h4>文章标题</h4>
-				<input name="title" type="text" placeholder="请在此输入文章的标题" />
-				<a style="float: right" href="../index/index.html"><h4>返回首页</h4></a>
-			</div>
-			
-			<div >
-				
-				<h4>文章内容</h4>
-				
-				<textarea name="context" rows="15" style="width: 80%"></textarea>
-				
-			</div>
-			
-			<div id="submit">
-				<button onclick="mysubmit(0)">发表</button><button onclick="mysubmit(1)">存为草稿</button>
-			</div>
-			
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>write</title>
+<meta name="author" content="Administrator" />
+<!-- Date: 2017-07-24 -->
+
+<link type="text/css" rel="stylesheet" href="../css/bootstrap.css" />
+
+<link type="text/css" rel="stylesheet" href="css/write.css" />
+
+<link type="text/css" href="../header/css/header.css" rel="stylesheet" />
+
+</head>
+<body>
+	<div id="header"></div>
+
+	<div class="content">
+
+		<div>
+			<h4>文章标题</h4>
+			<input name="title" type="text" placeholder="请在此输入文章的标题" /> <a
+				style="float: right" href="../index/index.html"><h4>返回首页</h4></a>
 		</div>
-		
-	</body>
-	
-	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
-	
-	<script type="text/javascript">
-		
+
+		<div>
+
+			<h4>文章内容</h4>
+
+			<textarea name="context" rows="15" style="width: 80%"></textarea>
+
+		</div>
+
+		<div id="submit">
+			<button onclick="mysubmit(0)">发表</button>
+			<!-- <button onclick="mysubmit(1)">存为草稿</button> -->
+		</div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+<script type="text/javascript">
+	//加载标题状态栏
 	$("#header").load("../header/header.html");
-		
-		var mysubmit = function(state){
-			var title = $("[name='title']");
-			var context = $("[name='context']");
-			
-			url = "/Blog/servlet/ArticleSave";
-			data = {"title":title.val(),"context":context.val(),"state":state};
-			
-			type = "POST";
-			
-			dataType = "json";
-			
-			success = function(data){
-				if(state==0&&data.state=="0"){
-					alert("文章发表成功");
-					title.val("");
-					context.val("");
-				}else if(state==1&&data.state=="0"){
-					alert("文章保存成功")
-					title.val("");
-					context.val("");
-				}
-			};
-			
-			$.ajax({
-				url:url,
-				data:data,
-				dataType:dataType,
-				type:type,
-				success:success
-			});
-			
+
+	//加载一定范围内的文章的 信息
+	var loadArts = function(type, start, numb) {
+
+		var art = "";
+
+		url = "/Blog/servlet/GetArticle";
+
+		data = {
+			"type" : type,
+			"start" : start,
+			"numb" : numb
 		};
-		
-	</script>
-	
+
+		dataType = "json";
+
+		type = "POST";
+
+		success = function(data) {
+			if (data.state == "0") {
+				art = data.obj;
+			}
+		};
+
+		$.ajax({
+			url : url,
+			data : data,
+			dataType : dataType,
+			async : false,
+			type : type,
+			success : success
+		});
+		return art;
+	};
+
+	//
+	var mysubmit = function(state) {
+		var title = $("[name='title']");
+		var context = $("[name='context']");
+
+		//alert(title.val().length);
+
+		if (title.val() == "" || context.val() == "") {
+
+			alert("标题和内容都不能为空!");
+
+			return false;
+		} else if (title.val().length < 5) {
+			alert("标题不能少于五个字符");
+			return false;
+		} else if (context.val().length < 30) {
+			alert("内容不能少于30个字");
+			return false;
+		}else if(loadArts(3,title.val(),0)!=""){
+			alert("你已经写过标题为:"+title.val()+" 的文章了!");
+			return false;
+		}
+
+		url = "/Blog/servlet/ArticleSave";
+		data = {
+			"title" : title.val(),
+			"context" : context.val(),
+			"state" : state
+		};
+
+		type = "POST";
+
+		dataType = "json";
+
+		success = function(data) {
+			if (state == 0 && data.state == "0") {
+				alert("文章发表成功");
+				title.val("");
+				context.val("");
+			} else if (state == 1 && data.state == "0") {
+				alert("文章保存成功")
+				title.val("");
+				context.val("");
+			}
+		};
+
+		$.ajax({
+			url : url,
+			data : data,
+			dataType : dataType,
+			type : type,
+			success : success
+		});
+
+	};
+</script>
+
 </html>
 

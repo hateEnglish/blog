@@ -202,6 +202,54 @@ public class ArticleDao {
 		return articles;
 	}
 
+	
+	
+	/**
+	 * 通过文章作者获得文章列表
+	 * 
+	 * @param user_id 文章作者id
+	 * 
+	 * @return 文章列表
+	 * 
+	 * */
+	public Article getArticleByUserIdAndTitle(int user_id,String title) {
+		Article art = null;
+
+		String sql = "select * from article where user_id=? and title =?";
+
+		
+		PreparedStatement preStm = DatabaseUtil.getStatement(conn, sql);
+
+		try {
+
+			preStm.setInt(1, user_id);
+			preStm.setString(2, title);
+
+			ResultSet rs = preStm.executeQuery();
+
+			
+
+			while (rs.next()) {
+				art = new Article();
+				art.setId(rs.getInt("id"));
+				art.setState(rs.getInt("state"));
+				art.setTitle(rs.getString("title"));
+				art.setType_id(rs.getInt("type_id"));
+				art.setUser_id(rs.getInt("user_id"));
+				art.setTime(rs.getTimestamp("time"));
+				// art.setContent(rs.getString("content"));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return art;
+	}
+	
+	
+	
 	/**
 	 * 获取最新发表的文章列表
 	 * 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.blog.dao.ArticleDao;
 import com.blog.domain.Article;
+import com.blog.domain.User;
 import com.blog.util.GsonUtil;
 import com.blog.util.Result;
 
@@ -18,6 +19,7 @@ public class GetArticle extends HttpServlet {
 	public static final String GET_BY_ID = "0";
 	public static final String GET_BY_TIME = "1";
 	public static final String GET_BY_USER_ID = "2";
+	public static final String GET_BY_USER_ID_AND_TITLE = "3";
 
 	ArticleDao articleDao = ArticleDao.getInstance();
 
@@ -93,7 +95,30 @@ public class GetArticle extends HttpServlet {
 
 			result.setObj(arts);
 			
+		}else if(GET_BY_USER_ID_AND_TITLE.equals(type)){
+			
+			System.out.println("getArticle byuser_idandtitle");
+
+			User user= (User) req.getSession().getAttribute("user");
+			
+			//获取当前用户id
+			int user_id = user.getId();
+			
+			String title = req.getParameter("start");
+			
+			Article art = articleDao.getArticleByUserIdAndTitle(user_id, title);
+			
+			if(null!=art){
+				result.setObj(art);
+			}else{
+				result.setState(1);
+			}
+			
 		}
+		
+		
+		
+		
 		System.out.println(GsonUtil.toJson(result));
 
 		resp.getWriter().write(GsonUtil.toJson(result));
