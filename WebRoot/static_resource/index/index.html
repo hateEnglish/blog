@@ -51,9 +51,9 @@
 		<!-- 页面右边框 -->
 		<div class="right_bar">
 
-			<div>
+			<div style="float:left; margin-top: 15px">
 				<!-- 写文章标题 -->
-				<a href="../write/write.html"><h4>写文章</h4></a>
+				<a href="../write/write.html"><span style="font-size: 20px">写文章</span></a>
 			</div>
 
 			<!-- 展示新发表文章 -->
@@ -143,7 +143,7 @@
 	};
 
 	//统计文章篇数  返回文章篇数
-	//当type为0时 统计所有文章篇数 user_id 失效
+	//当type为0时 统计所有文章篇数 参数user_id 失效
 	//当type为1时 统计user_id 为 传入user_id 的文章数 
 	var countArts = function(type, user_id) {
 
@@ -167,6 +167,8 @@
 			if (data.state == "0") {
 				//alert("获取到的文章篇数为:" + data.obj);
 				artsNumb = parseInt(data.obj);
+			}else if(data.state=="1"){
+				//alert("获取文章篇数出错");
 			}
 
 		};
@@ -174,6 +176,7 @@
 		$.ajax({
 
 			url : url,
+			type:type,
 			data : data,
 			dataType : dataType,
 			async : async,

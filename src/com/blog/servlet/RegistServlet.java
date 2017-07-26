@@ -19,7 +19,7 @@ public class RegistServlet extends HttpServlet {
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-			doPost(req,resp);
+			//doPost(req,resp);
 		
 	}
 
@@ -38,6 +38,9 @@ public class RegistServlet extends HttpServlet {
 		
 		String account = req.getParameter("account");
 		String user_name = req.getParameter("user_name");
+		//改变用户名编码
+		user_name = new String(user_name.getBytes("ISO-8859-1"),"utf-8");
+				
 		String passwd = req.getParameter("password");
 		String sex = req.getParameter("sex");
 		
@@ -51,18 +54,24 @@ public class RegistServlet extends HttpServlet {
 		user.setSex("woman".equals(sex)?"1":"0");
 		user.setTime(new Timestamp(System.currentTimeMillis()));
 		
+		Result result = new Result();
+		
+		
 		if(userDao.add(user)){
 			System.out.println("添加用户成功");
+			result.setState(0);
+			result.setObj("注册成功");
 		}else{
 		
 		System.out.println("添加用户失败");
-		
+			result.setState(1);
+			result.setObj("该账号已经存在");
 		}
 		
-		Result result = new Result();
 		
-		result.setState(0);
-		result.setObj("注册成功");
+		
+		
+		
 		resp.getWriter().write(GsonUtil.toJson(result));
 		
 	}

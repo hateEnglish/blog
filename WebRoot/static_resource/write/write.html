@@ -46,6 +46,31 @@
 <script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
 
 <script type="text/javascript">
+	//获取用户登陆状态 如果没有登陆则跳转到登陆页
+	url = "/Blog/servlet/GetUserState";
+	dataType = "json";
+	type = "POST";
+	async = false;
+	success = function(data) {
+		if (data.state == "0") {
+			
+		} else if (data.state == "1") {
+			alert("用户还没有登陆,请登陆!")
+			window.location="/Blog/static_resource/login/login.html";
+		}
+	};
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		type : type,
+		async:async,
+		success : success
+	});
+
+	
+	
+	
 	//加载标题状态栏
 	$("#header").load("../header/header.html");
 
@@ -101,8 +126,8 @@
 		} else if (context.val().length < 30) {
 			alert("内容不能少于30个字");
 			return false;
-		}else if(loadArts(3,title.val(),0)!=""){
-			alert("你已经写过标题为:"+title.val()+" 的文章了!");
+		} else if (loadArts(3, title.val(), 0) != "") {
+			alert("你已经写过标题为:" + title.val() + " 的文章了!");
 			return false;
 		}
 

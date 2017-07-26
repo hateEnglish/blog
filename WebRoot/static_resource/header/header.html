@@ -2,71 +2,118 @@
 "http://www.w3.org/TR/html4/strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>header1</title>
-		<meta name="author" content="Administrator" />
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>header1</title>
+<meta name="author" content="Administrator" />
 
-		<link type="text/css" href="../css/bootstrap.css" rel="stylesheet"/>
+<link type="text/css" href="../css/bootstrap.css" rel="stylesheet" />
 
-		<link type="text/css" href="css/header.css" rel="stylesheet"/>
+<link type="text/css" href="css/header.css" rel="stylesheet" />
 
-	</head>
+</head>
 
-	<body>
+<body>
 
-		<nav class="nav-tabs" style="background: #fefefe">
-			<div id="show_icon">
-				<h3><a href="/Blog/static_resource/index/index.html">BLOG</a></h3>
-			</div>
+	<nav class="nav-tabs" style="background: #fefefe">
+	<div id="show_icon">
+		<h3>
+			<a href="/Blog/static_resource/index/index.html">BLOG</a>
+		</h3>
+	</div>
 
-			<div id="user_state" >
-				<div id="unlogin" >
-				<h4 style="margin-right: 20px;"><a href="../login/login.html">登陆</a>
-				<a href="../regist/regist.html">注册</a></h4>
-				</div>
-				
-				<div id="login" style="margin-right: 30px;margin-top: 15px">
-					<label style="float: left;margin-top: 5px;margin-right: 20px"><a>设置</a></label>
-					<a href="#"><img width="50px" height="50px" alt="用户头像" src="../imgs/default.jpg"/></a>
-					<label id="user_name">小心一点</label>
-					
-				</div>
-				
-			</div>
+	<div id="user_state">
+		<div id="unlogin">
+			<h4 style="margin-right: 20px;">
+				<a href="../login/login.html">登陆</a> <a href="../regist/regist.html">注册</a>
+			</h4>
+		</div>
 
-		</nav>
+		<div id="login" style="margin-right: 40px;margin-top: 15px">
+			<!-- <label style="float: left;margin-top: 5px;margin-right: 20px"><a>设置</a></label> -->
+			<a href="#"><img width="50px" height="50px" alt="用户头像"
+				src="../imgs/default.jpg" onclick="showMenu()"/></a> <label id="user_name">小心一点</label>
+			<ul id="down_menu" style="position: absolute;right: 60px;top: 90px">
+				<li style="list-style:none"><a id="login_out" href="#" style="font-size:15px" onclick = "loginOut()">登出</a></li>
+			</ul>
+		</div>
 
-	</body>
+	</div>
+
+	</nav>
+
+</body>
+
+<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
+
+<script>
+
+	//显示下拉菜单
+	var menu_show = false;
+	var menu = $("#down_menu");
+	menu.hide();
+	var showMenu = function(){
+		if(!menu_show){
+			menu.show();
+			menu_show = true;
+		}else{
+			menu.hide();
+			menu_show = false;
+		}
+	};
+
 	
-	<script type="text/javascript" src="../js/jquery-3.2.1.js"></script>
-	
-	<script>
-		var unlogin = $("#unlogin");
-		var login = $("#login");
-		login.hide();
-		
-		url = "/Blog/servlet/GetUserState";
-		dataType = "json";
+	//退出登陆
+	var loginOut = function(){
+		//alert("登出");
+		url = "/Blog/servlet/LoginOutServlet";
 		type = "POST";
 		success = function(data){
 			if(data.state=="0"){
-				unlogin.hide();
-				login.show();
-				$("#user_name").text(data.obj.name);
-			}else if(data.state=="1"){
-				//alert(data.obj);
+				alert("退出登陆成功,返回首页");
+				window.location="/Blog/static_resource/index/index.html";
 			}
 		};
 		
+		dataType = "json";
+		
+		async = false;
+		
 		$.ajax({
 			url:url,
-			dataType:dataType,
 			type:type,
-			success:success
+			success:success,
+			dataType:dataType
+			
 		});
-		
-	</script>
-	
+	};
+
+
+
+	var unlogin = $("#unlogin");
+	var login = $("#login");
+	login.hide();
+
+	url = "/Blog/servlet/GetUserState";
+	dataType = "json";
+	type = "POST";
+	success = function(data) {
+		if (data.state == "0") {
+			unlogin.hide();
+			login.show();
+			$("#user_name").text(data.obj.name);
+		} else if (data.state == "1") {
+			//alert(data.obj);
+		}
+	};
+
+	$.ajax({
+		url : url,
+		dataType : dataType,
+		type : type,
+		success : success
+	});
+</script>
+
 </html>
 

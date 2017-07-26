@@ -19,10 +19,10 @@
   	<filter-class>com.blog.filter.LoginFilter</filter-class>
   </filter>
   
-  <filter-mapping>
+  <!-- <filter-mapping>
   	<filter-name>login_filter</filter-name>
   	<url-pattern>/static_resource/write/write.html</url-pattern>
-  </filter-mapping>
+  </filter-mapping> -->
   
   <filter>
   	<filter-name>index_filter</filter-name>

@@ -21,7 +21,7 @@
 
 				<tr>
 					<td><h5 align="center">账号:</h5></td>
-					<td><input type="text" name="account" placeholder="六到八位由字母和数字构成"
+					<td><input type="text" name="account" placeholder="五到八位字符"
 						required /></td>
 					<td><label id="account_lab"></label></td>
 
@@ -34,16 +34,16 @@
 				</tr>
 				<tr>
 					<td><h5 align="center">密码:</h5></td>
-					<td><input type="password" name="password" placeholder="六到十二位由字母和数字构成"
+					<td><input type="password" name="password" placeholder="六到十二位字符"
 						required /></td>
-					<td><label id="passwd_lab"></label></td>
+					<td><label id="password_lab"></label></td>
 				</tr>
 
 				<tr>
 					<td><h5 align="center">再次输入密码:</h5></td>
 					<td><input type="password" id="re_password"
 						placeholder="请再次输入密码" required /></td>
-					<td><label id="re_passwd_lab"></label></td>
+					<td><label id="re_password_lab"></label></td>
 				</tr>
 
 				<tr>
@@ -82,6 +82,65 @@
 
 	//表单校验
 	
+	//通用表单校验方法
+	var comment_check_func = function(checked_comp,show_result_comp,form,result_text){
+		par = new RegExp(form);
+		
+		//alert("show:"+show_result_comp)
+		
+		if(!par.test(checked_comp.val())){
+			//alert(checked_comp.val()+"匹配不成功"+form);
+			show_result_comp.text(result_text);
+			return false;
+		}else{
+			show_result_comp.text("");
+			//alert(checked_comp.val()+"匹配成功"+form);
+			return true;
+		}
+	};
+	
+	
+	//账号栏格式校验
+	var account_i = $("[name='account']");
+	account_i.blur(
+		function(){
+			//alert("失去焦点");
+	comment_check_func(account_i,$("#account_lab"),".{5,8}","格式不正确");
+		}		
+	);
+	
+	
+	
+	//用户名格式校验
+	var user_name_i = $("[name='user_name']");
+	user_name_i.blur(
+			function(){
+				//alert("失去焦点");
+		comment_check_func(user_name_i,$("#user_name_lab"),".{3,10}","格式不正确");
+			}		
+		);
+	
+	
+	//密码格式校验
+	var password_i = $("[name='password']");
+	password_i.blur(
+			function(){
+				//alert("失去焦点");
+		comment_check_func(password_i,$("#password_lab"),".{6,12}","格式不正确");
+			}		
+		);
+	
+	
+	//重复密码校验
+	var re_password_i = $("#re_password");
+	re_password_i.blur(
+			function(){
+				//alert("失去焦点");
+		comment_check_func(re_password_i,$("#re_password_lab"),"^"+password_i.val()+"$","两次密码不相同");
+			}		
+		);
+	
+	
 	
 	
 
@@ -89,15 +148,32 @@
 	//阻止表单提交  实现 ajax 提交表单
 	var mysubmit = function() {
 
+		//提交校验
+		if(comment_check_func(account_i,$("#account_lab"),".{5,8}","格式不正确")&&
+				comment_check_func(user_name_i,$("#user_name_lab"),".{3,10}","格式不正确")&&
+				comment_check_func(password_i,$("#password_lab"),".{6,12}","格式不正确")&&
+				comment_check_func(re_password_i,$("#re_password_lab"),"^"+password_i.val()+"$","两次密码不相同")
+		){
+			
+		}else{
+			alert("表单格式不正确,请确认后提交");
+			return false;
+		}
+		
+		
+		//提交数据
 		url = "/Blog/servlet/RegistServlet";
 		type = "POST";
 		dataType = "json";
 
 		success = function(data) {
-			alert(data.state);
-			if (data.state == '1') {
-				alert("fucm");
-				$("#error").text(data.obj + "haha");
+			//alert(data.state);
+			if (data.state == "1") {
+				//alert("fucm");
+				$("#error").text(data.obj);
+			}else if(data.state=="0"){
+				alert(data.obj+" 请登陆!");
+				window.location="/Blog/static_resource/login/login.html";
 			}
 		};
 

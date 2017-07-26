@@ -31,7 +31,26 @@ public class LoginServlet extends HttpServlet {
 	 *             if an error occurred
 	 */
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {}
+
+	/**
+	 * The doPost method of the servlet. <br>
+	 * 
+	 * This method is called when a form has its tag value method equals to
+	 * post.
+	 * 
+	 * @param request
+	 *            the request send by the client to the server
+	 * @param response
+	 *            the response send by the server to the client
+	 * @throws ServletException
+	 *             if an error occurred
+	 * @throws IOException
+	 *             if an error occurred
+	 */
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+
 
 		String account = req.getParameter("account");
 		String passwd = req.getParameter("password");
@@ -66,26 +85,7 @@ public class LoginServlet extends HttpServlet {
 			
 		}
 
-	}
-
-	/**
-	 * The doPost method of the servlet. <br>
-	 * 
-	 * This method is called when a form has its tag value method equals to
-	 * post.
-	 * 
-	 * @param request
-	 *            the request send by the client to the server
-	 * @param response
-	 *            the response send by the server to the client
-	 * @throws ServletException
-	 *             if an error occurred
-	 * @throws IOException
-	 *             if an error occurred
-	 */
-	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		doGet(req, resp);
+	
 	}
 
 }
