@@ -4,9 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>showNows</title>
+		<title>文章标题</title>
 		<meta name="author" content="Administrator" />
 		<!-- Date: 2017-07-20 -->
+		
+		<link rel="shortcut icon" type="image/x-icon" href="../imgs/icon.png" media="screen" />
 		
 		<link type="text/css" rel="stylesheet" href="css/showNows.css" />
 		
@@ -71,6 +73,8 @@
 		success = function(data) {
 			//alert(data);
 			$("#title").html(data.obj.title);
+			//设置网页标题
+			$("title").text(data.obj.title);
 			$("#context").html(data.obj.content);
 		};
 
