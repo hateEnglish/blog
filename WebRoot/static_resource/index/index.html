@@ -17,7 +17,7 @@
 <link type="text/css" href="../header/css/header.css" rel="stylesheet" />
 
 </head>
-<body style="background:url('../imgs/bg.jpg');">
+<body style="background:url('../imgs/bg.jpg') fixed;background-size:cover;">
 	<div id="header"></div>
 
 	<div class="content">
@@ -85,7 +85,7 @@
 	var productLi = function(art_id, title, auther, time) {
 		return "<li class='art_li'><div class='article'><div class='title'><h3><a onclick='artToRead("
 				+ art_id
-				+ ")' href='/Blog/static_resource/read/read.html'>"
+				+ ")' href='/Blog/static_resource/read/read.html' target='_blank'>"
 				+ title
 				+ "</a></h3></div><div class='author'><h4>"
 				+ auther
