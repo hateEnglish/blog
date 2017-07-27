@@ -1,10 +1,9 @@
+
 package com.blog.util;
 
 public class Result {
-	//返回值状态 0 为成功 1 为失败 2 为异常
 	private int state;
 	
-	//返回对象
 	private Object obj;
 
 	

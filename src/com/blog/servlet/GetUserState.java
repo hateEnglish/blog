@@ -63,7 +63,7 @@ public class GetUserState extends HttpServlet {
 			
 			Result result = new Result();
 			result.setState(1);
-			result.setObj("还没有用户登陆");
+			result.setObj("还没有登陆");
 			
 			resp.getWriter().write(GsonUtil.toJson(result));
 			
