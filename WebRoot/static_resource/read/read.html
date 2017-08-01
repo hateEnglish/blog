@@ -53,7 +53,27 @@
 	$("#header").load("../header/header.html");
 	
 	var cookie = document.cookie;
-	var art_id = cookie.split("=")[1];
+	//alert("cooke "+cookie);
+	
+	
+	var art_id = "";
+	
+	if(-1!=cookie.indexOf(";")){
+	var cooks = cookie.split(";");
+	
+	//alert("cooks="+cooks)
+	
+	for(c in cooks){
+		//alert(cooks[c]);
+		if(cooks[c].match("art_id=.+")){
+			//alert("匹配成功  "+cooks[c]);
+			art_id = cooks[c].split("=")[1];
+		}
+	}
+	
+	}else{
+		art_id = cookie.split("=")[1];
+	}
 	//alert(cookie+":"+art_id);
 	
 	//加载文章

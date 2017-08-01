@@ -124,6 +124,55 @@ public class UserDao {
 		return user;
 	}
 
+	
+	/**
+	 * 通过用户id获得用户
+	 * 
+	 * @param id 用户id
+	 * 
+	 * @return 用户对象
+	 * */
+	public User getUserById(int id) {
+
+		User user = null;
+
+		String sql = "select * from user where id = ?";
+
+		PreparedStatement preSta = DatabaseUtil.getStatement(conn, sql);
+
+		try {
+			preSta.setInt(1, id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			ResultSet rs = preSta.executeQuery();
+
+			
+			while (rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setAccount(rs.getString("account"));
+				user.setName(rs.getString("name"));
+				user.setPasswd(rs.getString("password"));
+				user.setSex(rs.getString("sex"));
+				user.setSign(rs.getString("sign"));
+				user.setImg(rs.getString("img"));
+				user.setTime(rs.getTimestamp("time"));
+			}
+			preSta.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return user;
+	}
+	
+	
 	/**
 	 * 获取新注册的用户
 	 * 

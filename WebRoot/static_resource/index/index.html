@@ -8,7 +8,8 @@
 <meta name="author" content="Administrator" />
 <!-- Date: 2017-07-22 -->
 
-<link rel="shortcut icon" type="image/x-icon" href="../imgs/icon.png" media="screen" />
+<link rel="shortcut icon" type="image/x-icon" href="../imgs/icon.png"
+	media="screen" />
 
 <link type="text/css" href="../css/bootstrap.css" rel="stylesheet" />
 
@@ -17,7 +18,8 @@
 <link type="text/css" href="../header/css/header.css" rel="stylesheet" />
 
 </head>
-<body style="background:url('../imgs/bg.jpg') fixed;background-size:cover;">
+<body
+	style="background:url('../imgs/bg.jpg') fixed;background-size:cover;">
 	<div id="header"></div>
 
 	<div class="content">
@@ -82,14 +84,16 @@
 	$("#header").load("../header/header.html");
 
 	//产生元素li 用以添加显示文章信息
-	var productLi = function(art_id, title, auther, time) {
+	var productLi = function(art_id, title, auther, user_id, time) {
 		return "<li class='art_li'><div class='article'><div class='title'><h3><a onclick='artToRead("
 				+ art_id
 				+ ")' href='/Blog/static_resource/read/read.html' target='_blank'>"
 				+ title
-				+ "</a></h3></div><div class='author'><h4>"
+				+ "</a></h3></div><div class='author'><h4><a onclick=userToShow('"
+				+ user_id
+				+ "') href='/Blog/static_resource/user/user.html' target='_blank'>"
 				+ auther
-				+ "</h4></div><div class='time'><h6>"
+				+ "</a></h4></div><div class='time'><h6>"
 				+ time
 				+ "</h6></div></div></li>";
 	};
@@ -98,7 +102,17 @@
 	//以便跳转到文章阅读页面后 加载文章
 	var artToRead = function(art_id) {
 		//alert(art_id);
-		document.cookie = "art_id=" + art_id + ";path=/";
+		document.cookie = "art_id=" + art_id + ";path=/Blog";
+
+		//window.location.href="/Blog/read/read.html";
+
+	};
+
+	//用于用户显示 设置用户idcookie 
+	//以便跳转到用户显示页面后 加载用户信息
+	var userToShow = function(user_id) {
+		//alert(art_id);
+		document.cookie = "user_id=" + user_id + ";path=/Blog";
 
 		//window.location.href="/Blog/read/read.html";
 
@@ -129,7 +143,7 @@
 				$.each(data.obj, function(i, item) {
 					//添加文章信息 用以显示
 					arts.append(productLi(item.id, item.title, item.author,
-							item.time));
+							item.user_id, item.time));
 				});
 			}
 		};
@@ -169,7 +183,7 @@
 			if (data.state == "0") {
 				//alert("获取到的文章篇数为:" + data.obj);
 				artsNumb = parseInt(data.obj);
-			}else if(data.state=="1"){
+			} else if (data.state == "1") {
 				//alert("获取文章篇数出错");
 			}
 
@@ -178,7 +192,7 @@
 		$.ajax({
 
 			url : url,
-			type:type,
+			type : type,
 			data : data,
 			dataType : dataType,
 			async : async,
@@ -198,7 +212,7 @@
 
 	//开始加载文章
 	loadArts(1, 0, everpagenumb);
-	
+
 	//当前页表示span
 	var nowpage = $("#nowpage");
 	//上一页按钮
@@ -211,10 +225,10 @@
 	var nowpagenumb = 0;
 
 	var allpagenumb = Math.ceil(artsnumb / everpagenumb);
-	
-	allpage.text("共有 "+allpagenumb+" 页");
-	nowpage.text("当前页: "+(nowpagenumb+1));
-	
+
+	allpage.text("共有 " + allpagenumb + " 页");
+	nowpage.text("当前页: " + (nowpagenumb + 1));
+
 	//alert(allpage);
 
 	//向上或向下翻页
@@ -224,12 +238,12 @@
 		if (nowpagenumb > 0) {
 
 			nowpagenumb--;
-			
-			nowpage.text("当前页:"+(nowpagenumb+1));
-			
+
+			nowpage.text("当前页:" + (nowpagenumb + 1));
+
 			loadArts(1, nowpagenumb * everpagenumb, everpagenumb);
 
-		}else{
+		} else {
 			alert("没有上一页了");
 		}
 
@@ -239,17 +253,16 @@
 	var loaddownpage = function() {
 		//alert("向下翻页");
 		//向下翻页
-		if (nowpagenumb < allpagenumb-1) {
+		if (nowpagenumb < allpagenumb - 1) {
 			nowpagenumb++;
-			
-			nowpage.text("当前页:"+(nowpagenumb+1));
-			
+
+			nowpage.text("当前页:" + (nowpagenumb + 1));
+
 			loadArts(1, nowpagenumb * everpagenumb, everpagenumb);
 
-		}else{
+		} else {
 			alert("以到最后一页");
 		}
-		
 
 	};
 

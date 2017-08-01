@@ -34,6 +34,7 @@
 			<a href="#"><img width="50px" height="50px" alt="用户头像"
 				src="../imgs/default.jpg" onclick="showMenu()"/></a> <label id="user_name">小心一点</label>
 			<ul id="down_menu" style="position: absolute;right: 60px;top: 90px">
+				<li style="list-style:none"><a id="info" href="#" style="font-size:15px" onclick = "info()">信息</a></li>
 				<li style="list-style:none"><a id="login_out" href="#" style="font-size:15px" onclick = "loginOut()">登出</a></li>
 			</ul>
 		</div>
@@ -62,6 +63,8 @@
 		}
 	};
 
+	var user = "";
+	
 	
 	//退出登陆
 	var loginOut = function(){
@@ -87,8 +90,8 @@
 			
 		});
 	};
-
-
+	
+	
 
 	var unlogin = $("#unlogin");
 	var login = $("#login");
@@ -102,6 +105,7 @@
 			unlogin.hide();
 			login.show();
 			$("#user_name").text(data.obj.name);
+			user = data.obj;
 		} else if (data.state == "1") {
 			//alert(data.obj);
 		}
@@ -111,8 +115,27 @@
 		url : url,
 		dataType : dataType,
 		type : type,
+		async:false,
 		success : success
 	});
+	
+	
+	//显示信息
+	var userToShow = function(user_id) {
+		//alert(art_id);
+		document.cookie = "user_id=" + user_id + ";path=/Blog";
+
+		//window.location.href="/Blog/read/read.html";
+
+	};
+	
+	var info = function(){
+		
+		userToShow(user.id);
+		document.location="/Blog/static_resource/user/user.html";
+		
+	};
+	
 </script>
 
 </html>

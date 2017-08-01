@@ -82,6 +82,13 @@
     <servlet-name>LoginOutServlet</servlet-name>
     <servlet-class>com.blog.servlet.LoginOutServlet</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>GetUserInfo</servlet-name>
+    <servlet-class>com.blog.servlet.GetUserInfo</servlet-class>
+  </servlet>
+
 
 
 
@@ -121,6 +128,10 @@
   <servlet-mapping>
     <servlet-name>LoginOutServlet</servlet-name>
     <url-pattern>/servlet/LoginOutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetUserInfo</servlet-name>
+    <url-pattern>/servlet/GetUserInfo</url-pattern>
   </servlet-mapping>
 
 </web-app>

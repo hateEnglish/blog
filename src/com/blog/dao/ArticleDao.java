@@ -167,7 +167,7 @@ public class ArticleDao {
 	public List<Article> getArticleByUserId(int user_id) {
 		List<Article> articles = null;
 
-		String sql = "select * from article where user_id=?";
+		String sql = "select * from article where user_id=? order by time desc";
 
 		
 		PreparedStatement preStm = DatabaseUtil.getStatement(conn, sql);
