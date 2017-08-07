@@ -88,6 +88,13 @@
     <servlet-name>GetUserInfo</servlet-name>
     <servlet-class>com.blog.servlet.GetUserInfo</servlet-class>
   </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>GetComment</servlet-name>
+    <servlet-class>com.blog.servlet.GetComment</servlet-class>
+  </servlet>
+
 
 
 
@@ -133,5 +140,16 @@
     <servlet-name>GetUserInfo</servlet-name>
     <url-pattern>/servlet/GetUserInfo</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetComment</servlet-name>
+    <url-pattern>/servlet/GetComment</url-pattern>
+  </servlet-mapping>
+
+
+
+<error-page>
+<error-code>404</error-code>
+<location>/WEB-INF/static/404.html</location>
+</error-page>
 
 </web-app>

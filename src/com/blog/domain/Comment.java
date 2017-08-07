@@ -6,14 +6,14 @@ public class Comment {
 	//评论id
 	private int id;
 	
-	//评论对象 文章id 或 评论id
+	//评论对象 0为对文章 其余为对评论
 	private int object;
 	
 	//发表评论的用户id
 	private int user_id;
 	
-	//评论种类0 为对文章  1为对评论
-	private int type;
+	//评论所属文章id
+	private int article_id;
 	
 	//评论内容
 	private String content;
@@ -45,12 +45,13 @@ public class Comment {
 		this.user_id = user_id;
 	}
 
-	public int getType() {
-		return type;
+
+	public int getArticle_id() {
+		return article_id;
 	}
 
-	public void setType(int type) {
-		this.type = type;
+	public void setArticle_id(int article_id) {
+		this.article_id = article_id;
 	}
 
 	public String getContent() {
@@ -72,9 +73,10 @@ public class Comment {
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", object=" + object + ", user_id="
-				+ user_id + ", type=" + type + ", content=" + content
-				+ ", time=" + time + "]";
+				+ user_id + ", article_id=" + article_id + ", content="
+				+ content + ", time=" + time + "]";
 	}
+
 	
 	
 }
