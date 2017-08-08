@@ -42,6 +42,9 @@
 		<pre id="context" class="middle">
 		
 		</pre>
+		<hr/>
+		<div id="comment"></div>
+		
 		</div>
 	</body>
 	
@@ -56,8 +59,9 @@
 	//alert("cooke "+cookie);
 	
 	
-	var art_id = "";
 	
+	
+	var get_cook = function(cookname){
 	if(-1!=cookie.indexOf(";")){
 	var cooks = cookie.split(";");
 	
@@ -65,15 +69,19 @@
 	
 	for(c in cooks){
 		//alert(cooks[c]);
-		if(cooks[c].match("art_id=.+")){
+		if(cooks[c].match(cookname+"=.+")){
 			//alert("匹配成功  "+cooks[c]);
-			art_id = cooks[c].split("=")[1];
+			return cooks[c].split("=")[1];
 		}
 	}
 	
 	}else{
-		art_id = cookie.split("=")[1];
+		return cookie.split("=")[1];
 	}
+	};
+	
+	var art_id = get_cook("art_id");
+	
 	//alert(cookie+":"+art_id);
 	
 	//加载文章
@@ -111,6 +119,16 @@
 	//加载文章
 	loadArts(0,art_id,0);
 	</script>
+	
+	
+	
+	<script type="text/javascript">
+	
+	$("#comment").load("../comment/comment.html");
+	
+	
+	</script>
+	
 	
 </html>
 

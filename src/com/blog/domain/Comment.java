@@ -12,6 +12,9 @@ public class Comment {
 	//发表评论的用户id
 	private int user_id;
 	
+	//发表评论的用户名
+	private String user_name;
+	
 	//评论所属文章id
 	private int article_id;
 	
@@ -70,11 +73,21 @@ public class Comment {
 		this.time = time;
 	}
 
+	
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Comment [id=" + id + ", object=" + object + ", user_id="
-				+ user_id + ", article_id=" + article_id + ", content="
-				+ content + ", time=" + time + "]";
+				+ user_id + ", user_name=" + user_name + ", article_id="
+				+ article_id + ", content=" + content + ", time=" + time + "]";
 	}
 
 	

@@ -40,7 +40,7 @@ public class CommentDao {
 		try {
 			pres.setInt(1,comm.getArticle_id());
 			pres.setInt(2, comm.getObject());
-			pres.setInt(3, comm.getObject());
+			pres.setInt(3, comm.getUser_id());
 			pres.setString(4, comm.getContent());
 			pres.setTimestamp(5, comm.getTime());
 			
@@ -67,8 +67,11 @@ public class CommentDao {
 	 * */
 	public List<Comment> getCommentByArticleId(int article_id) {
 
-		String sql = "select * from comment where article_id = ?";
+		//String sql = "select * from comment where article_id = ?";
 
+		String sql = "select c.id,c.article_id,c.content,c.object,c.time,c.user_id,u.name as user_nam" +
+				"e from comment as c,user as u where c.user_id=u.id && c.article_id=? order by c.time desc";
+		
 		List<Comment> comms = null;
 
 		PreparedStatement pres = DatabaseUtil.getStatement(conn, sql);
@@ -89,7 +92,8 @@ public class CommentDao {
 				comm.setObject(rs.getInt("object"));
 				comm.setTime(rs.getTimestamp("time"));
 				comm.setUser_id(rs.getInt("user_id"));
-
+				comm.setUser_name(rs.getString("user_name"));
+				
 				comms.add(comm);
 
 			}
