@@ -87,11 +87,11 @@
 	var productLi = function(art_id, title, auther, user_id, time) {
 		return "<li class='art_li'><div class='article'><div class='title'><h3><a onclick='artToRead("
 				+ art_id
-				+ ")' href='/Blog/static_resource/read/read.html' target='_blank'>"
+				+ ")' href='/Blog/static_resource/read/read.html?art_id="+art_id+"' target='_blank'>"
 				+ title
 				+ "</a></h3></div><div class='author'><h4><a onclick=userToShow('"
 				+ user_id
-				+ "') href='/Blog/static_resource/user/user.html' target='_blank'>"
+				+ "') href='/Blog/static_resource/user/user.html?user_id="+user_id+"' target='_blank'>"
 				+ auther
 				+ "</a></h4></div><div class='time'><h6>"
 				+ time

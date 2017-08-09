@@ -77,30 +77,31 @@
 	
 	$("#header").load("../header/header.html");
 	
-	var cookie = document.cookie;
-	//alert("cooke "+cookie);
 	
-	
-	var user_id = "";
-	
-	if(-1!=cookie.indexOf(";")){
-	var cooks = cookie.split(";");
-	
-	//alert("cooks="+cooks)
-	
-	for(c in cooks){
-		//alert(cooks[c]);
-		if(cooks[c].match("user_id=.+")){
-			//alert("匹配成功  "+cooks[c]);
-			user_id = cooks[c].split("=")[1];
+	//获得get请求时传递的参数
+	var get_param=function(paramname){
+		var search=document.location.search;
+		//alert("search="+search);
+		//除去search带有的?
+		search=search.substr(1);
+		//分割参数
+		params = search.split("&");
+		for(i in params){
+			if(params[i].match(paramname+"=")){
+				var value = params[i].split("=")[1];
+			//	alert("value="+value);
+				return value;
+			}
 		}
-	}
+		return undefined;
+	};
 	
-	}else{
-		user_id = cookie.split("=")[1];
-	}
-	//user_id = "1";
-	//alert(user_id);
+	
+	
+	
+	
+	var user_id = get_param("user_id");
+	
 	
 	
 	
@@ -124,6 +125,8 @@
 		}else if(data.state=="0"){
 			//alert("hahah");
 			user_name.text(data.obj.name);
+			$("title").text(data.obj.name+"的个人主页");
+			
 			user_sign.text(data.obj.sign);
 		}
 		
@@ -146,7 +149,7 @@
 	var productLi = function(art_id, title, time) {
 		return "<li class='art_li'><div class='article'><div class='title'><h3><a onclick='artToRead("
 				+ art_id
-				+ ")' href='/Blog/static_resource/read/read.html' target='_blank'>"
+				+ ")' href='/Blog/static_resource/read/read.html?art_id="+art_id+"' target='_blank'>"
 				+ title
 				+ "</a></h3></div><div class='time'><h6>"
 				+ time
