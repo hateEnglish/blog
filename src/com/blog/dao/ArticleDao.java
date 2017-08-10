@@ -60,8 +60,6 @@ public class ArticleDao {
 		
 		PreparedStatement pres = DatabaseUtil.getStatement(conn, sql);
 		
-		
-		
 		try {
 			
 			pres.setInt(1, user_id);
@@ -122,9 +120,14 @@ public class ArticleDao {
 	 * @return 文章对象
 	 * */
 	public Article getArticleById(int id) {
+		
+		//TODO 将文章访问量先寄放在这里 只要加载文章就添加访问量
+		incrementVisitNumber(id);
+		
+		
 		Article art = null;
 
-		String sql = "select article.id,name,state,title,type_id,user_id,article.time,content from article ,user where article.id=? and article.user_id=user.id";
+		String sql = "select article.id,name,state,title,type_id,user_id,article.time,content,visit_number from article ,user where article.id=? and article.user_id=user.id";
 
 		PreparedStatement preStm = DatabaseUtil.getStatement(conn, sql);
 
@@ -146,13 +149,17 @@ public class ArticleDao {
 				art.setTime(rs.getTimestamp("time"));
 				art.setContent(rs.getString("content"));
 				art.setAuthor(rs.getString("name"));
-
+				art.setVisit_number(rs.getInt("visit_number"));
+				
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
+		
+		
+		
 		return art;
 	}
 
@@ -190,7 +197,8 @@ public class ArticleDao {
 				art.setUser_id(rs.getInt("user_id"));
 				art.setTime(rs.getTimestamp("time"));
 				// art.setContent(rs.getString("content"));
-
+				art.setVisit_number(rs.getInt("visit_number"));
+				
 				articles.add(art);
 
 			}
@@ -216,7 +224,6 @@ public class ArticleDao {
 		Article art = null;
 
 		String sql = "select * from article where user_id=? and title =?";
-
 		
 		PreparedStatement preStm = DatabaseUtil.getStatement(conn, sql);
 
@@ -227,8 +234,6 @@ public class ArticleDao {
 
 			ResultSet rs = preStm.executeQuery();
 
-			
-
 			while (rs.next()) {
 				art = new Article();
 				art.setId(rs.getInt("id"));
@@ -238,7 +243,7 @@ public class ArticleDao {
 				art.setUser_id(rs.getInt("user_id"));
 				art.setTime(rs.getTimestamp("time"));
 				// art.setContent(rs.getString("content"));
-
+				art.setVisit_number(rs.getInt("visit_number"));
 			}
 
 		} catch (SQLException e) {
@@ -263,7 +268,7 @@ public class ArticleDao {
 
 		//String sql = "select * from article order by time desc limit ?,?";
 
-		String sql = "select article.id,name,state,title,type_id,user_id,article.time" +
+		String sql = "select article.id,name,state,title,type_id,user_id,article.time,visit_number" +
 				" from article ,user where article.user_id=user.id order by article.time desc limit ?,?";
 		
 		
@@ -289,6 +294,8 @@ public class ArticleDao {
 				art.setTime(rs.getTimestamp("time"));
 				// art.setContent(rs.getString("content"));
 				art.setAuthor(rs.getString("name"));
+				art.setVisit_number(rs.getInt("visit_number"));
+				
 
 				articles.add(art);
 
@@ -301,4 +308,31 @@ public class ArticleDao {
 		return articles;
 	}
 
+	/**
+	 * 增加文章的访问量
+	 * 
+	 * @param article_id 文章id
+	 * 
+	 * @return 没有
+	 * */
+	public void incrementVisitNumber(int article_id){
+		
+		String sql = "update article set visit_number=visit_number+1 where id=?";
+		
+		PreparedStatement preStm = DatabaseUtil.getStatement(conn, sql);
+		
+		try {
+			preStm.setInt(1, article_id);
+			
+			preStm.execute();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
 }

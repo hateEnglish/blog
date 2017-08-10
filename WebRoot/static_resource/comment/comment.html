@@ -216,7 +216,7 @@
 			} else {
 				$(".comment_input").val("");
 				comment_ul.prepend(get_comment_item("../imgs/default.jpg",
-						user_name, content, new Date()
+						decodeURI(user_name), content, new Date()
 								.Format("yyyy-MM-dd hh:mm:ss")));
 			}
 		};

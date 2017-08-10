@@ -106,7 +106,7 @@
 			login.show();
 			$("#user_name").text(data.obj.name);
 			//alert(data.obj.name);
-			document.cookie = "user_name=" + data.obj.name + ";path=/Blog";
+			document.cookie = "user_name=" + encodeURI(data.obj.name) + ";path=/Blog";
 			user = data.obj;
 		} else if (data.state == "1") {
 			//alert(data.obj);

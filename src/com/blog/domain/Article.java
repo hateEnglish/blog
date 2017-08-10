@@ -3,29 +3,32 @@ package com.blog.domain;
 import java.sql.Timestamp;
 
 public class Article {
-	//����id
+	//文章id
 	private int id;
 	
-	//���±���
+	//文章标题
 	private String title;
 	
-	//����״̬ 0Ϊ����״̬1��Ϊ�ݸ�״̬
+	//文章状态
 	private int state;
 	
-	//��������id
+	//文章类型id
 	private int type_id;
 	
-	//�û�id
+	//文章作者id
 	private int user_id;
 	
-	//��������
+	//文章内容
 	private String content;
 	
-	//���·���ʱ��
+	//文章创建时间
 	private Timestamp time;
 	
 	//作者名称 即 用户名
 	private String author;
+	
+	//访问量
+	private Integer visit_number;
 
 	public int getId() {
 		return id;
@@ -85,12 +88,14 @@ public class Article {
 
 	
 
+	
+
 	@Override
 	public String toString() {
 		return "Article [id=" + id + ", title=" + title + ", state=" + state
 				+ ", type_id=" + type_id + ", user_id=" + user_id
 				+ ", content=" + content + ", time=" + time + ", author="
-				+ author + "]";
+				+ author + ", visit_number=" + visit_number + "]";
 	}
 
 	public String getAuthor() {
@@ -99,6 +104,14 @@ public class Article {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public Integer getVisit_number() {
+		return visit_number;
+	}
+
+	public void setVisit_number(Integer visit_number) {
+		this.visit_number = visit_number;
 	}
 	
 	
